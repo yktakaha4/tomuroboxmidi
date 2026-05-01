@@ -1,4 +1,8 @@
-.PHONY: fix check test build install
+.PHONY: install fix check test build
+
+
+install:
+	uv tool install --reinstall .
 
 fix:
 	uv run black .
@@ -14,6 +18,3 @@ test:
 build:
 	uv sync --group build
 	uv run pyinstaller --onefile --name tomuroboxmidi main.py
-
-install:
-	uv tool install --reinstall .
