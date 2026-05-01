@@ -28,9 +28,9 @@ N20_VALID: Final[frozenset[int]] = frozenset(
 )
 
 N40_VALID: Final[frozenset[int]] = frozenset(
-    set(range(53, 106))
+    set(range(53, 97))
     - {54, 56, 58, 61}
-    # 53=F2, 105=A6
+    # 53=F2, 96=C6
     # excluded: F#2(54), G#2(56), A#2(58), C#3(61)
 )
 

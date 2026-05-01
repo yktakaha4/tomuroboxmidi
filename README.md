@@ -69,7 +69,7 @@ Notes outside the valid range are removed rather than silently transposed.
 
 ### N40 (default)
 
-Range: F2 – A6 (chromatic, with four exceptions)
+Range: F2 – C6 (chromatic, with four exceptions)
 
 Excluded notes: F#2, G#2, A#2, C#3
 
