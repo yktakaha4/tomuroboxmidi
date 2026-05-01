@@ -215,22 +215,22 @@ name = "tomuroboxmidi"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
-    { name = "black" },
-    { name = "isort" },
     { name = "mido" },
 ]
 
 [package.dev-dependencies]
-build = [
+dev = [
+    { name = "black" },
+    { name = "isort" },
     { name = "pyinstaller" },
 ]
 
 [package.metadata]
-requires-dist = [
-    { name = "black", specifier = ">=26.3.1" },
-    { name = "isort", specifier = ">=8.0.1" },
-    { name = "mido", specifier = ">=1.3.3" },
-]
+requires-dist = [{ name = "mido", specifier = ">=1.3.3" }]
 
 [package.metadata.requires-dev]
-build = [{ name = "pyinstaller", specifier = ">=6" }]
+dev = [
+    { name = "black", specifier = ">=26.3.1" },
+    { name = "isort", specifier = ">=8.0.1" },
+    { name = "pyinstaller", specifier = ">=6" },
+]
