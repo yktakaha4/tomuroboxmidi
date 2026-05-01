@@ -120,7 +120,7 @@ def _remove_duplicates(messages: list) -> tuple[list, list[RemovedNote]]:
         abs_messages.append((current_tick, msg))
 
     seen_note_ons: set[tuple[int, int]] = set()  # (abs_tick, pitch)
-    kept_active: dict[int, int] = {}     # pitch -> count of kept open note_ons
+    kept_active: dict[int, int] = {}  # pitch -> count of kept open note_ons
     skipped_active: dict[int, int] = {}  # pitch -> count of skipped open note_ons
 
     result: list[tuple[int, object]] = []
