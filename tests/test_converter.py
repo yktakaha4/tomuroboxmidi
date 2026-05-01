@@ -1,9 +1,9 @@
-"""converter のスナップショットテスト。
+"""Snapshot tests for the converter.
 
-スナップショットの初回生成・更新:
+Generate or update snapshots:
     UPDATE_SNAPSHOTS=1 python -m unittest tests/test_converter.py
 
-通常のテスト実行:
+Run tests normally:
     python -m unittest discover -s tests
 """
 
@@ -24,7 +24,7 @@ UPDATE_SNAPSHOTS = os.environ.get("UPDATE_SNAPSHOTS") == "1"
 
 
 def _format_msg(msg) -> str:
-    """mido メッセージを tick なしのテキストに変換する。"""
+    """Format a mido message as text without the time field."""
     s = str(msg)
     if s.startswith("MetaMessage("):
         s = re.sub(r", time=\d+\)$", ")", s)
@@ -36,7 +36,7 @@ def _format_msg(msg) -> str:
 
 
 def midi_to_snapshot_text(result: ConvertResult, output_path: Path) -> str:
-    """変換結果と出力MIDIファイルをスナップショット用テキストに変換する。"""
+    """Serialize a ConvertResult and output MIDI file to snapshot text."""
     mid = mido.MidiFile(str(output_path))
 
     lines = [
@@ -81,14 +81,12 @@ class TestConverterSnapshot(unittest.TestCase):
 
         if not snapshot_path.exists():
             self.fail(
-                f"スナップショットが存在しません: {snapshot_path}\n"
-                "UPDATE_SNAPSHOTS=1 python -m unittest tests/test_converter.py で生成してください。"
+                f"Snapshot not found: {snapshot_path}\n"
+                "Run with UPDATE_SNAPSHOTS=1 to generate it."
             )
 
         expected = snapshot_path.read_text(encoding="utf-8")
-        self.assertEqual(
-            actual, expected, f"スナップショットと一致しません: {snapshot_path}"
-        )
+        self.assertEqual(actual, expected, f"Snapshot mismatch: {snapshot_path}")
 
     def test_daisy_bell_n20(self):
         self._run("daisy_bell.mid", "n20")

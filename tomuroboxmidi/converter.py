@@ -7,7 +7,7 @@ _NOTE_NAMES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
 
 
 def note_name(note: int) -> str:
-    """MIDIノート番号をノート名に変換する（C3=60 基準）。"""
+    """Convert a MIDI note number to a note name (C3 = 60)."""
     return f"{_NOTE_NAMES[note % 12]}{(note // 12) - 2}"
 
 
@@ -57,13 +57,14 @@ def _remove_out_of_range(
     messages: list,
     valid_notes: frozenset[int],
 ) -> tuple[list, list[RemovedNote]]:
-    """音域外のノートを削除する。
+    """Remove notes outside the valid range.
 
-    note_on を削除した場合は対応する note_off も削除し、
-    削除したメッセージの time を次のメッセージに加算してタイミングを保持する。
+    When a note_on is removed, its corresponding note_off is also removed.
+    The delta time of removed messages is carried forward to the next message
+    to preserve overall timing.
     """
     result = []
-    # pitch -> 削除済み note_on のうちまだ閉じていない数
+    # pitch -> number of filtered note_ons not yet closed
     filtered_active: dict[int, int] = {}
     removed_details: list[RemovedNote] = []
     pending_time = 0
@@ -94,7 +95,7 @@ def _remove_out_of_range(
                     filtered_active[msg.note] -= 1
                     pending_time += msg.time
                 else:
-                    # 対応する note_on がない孤立 note_off はそのまま通す
+                    # Orphaned note_off with no matching note_on — pass through
                     result.append(msg.copy(time=msg.time + pending_time))
                     pending_time = 0
         else:
@@ -105,24 +106,22 @@ def _remove_out_of_range(
 
 
 def _remove_duplicates(messages: list) -> tuple[list, list[RemovedNote]]:
-    """絶対 tick と pitch が完全一致する重複 note_on を削除する。
+    """Remove note_on messages that share the exact same absolute tick and pitch.
 
-    重複した note_on に対応する note_off も削除し、
-    先に出力した note_on が正しく閉じられるよう kept_active で追跡する。
+    When a duplicate note_on is removed, its corresponding note_off is also
+    removed. kept_active tracks open note_ons that were kept, so their
+    note_offs are correctly preserved.
     """
-    # デルタ時間 -> 絶対 tick に変換
+    # Convert delta times to absolute ticks
     abs_messages: list[tuple[int, object]] = []
     current_tick = 0
     for msg in messages:
         current_tick += msg.time
         abs_messages.append((current_tick, msg))
 
-    # (abs_tick, pitch) の組み合わせで重複を検出
-    seen_note_ons: set[tuple[int, int]] = set()
-    # pitch -> 出力済みで未閉の note_on 数
-    kept_active: dict[int, int] = {}
-    # pitch -> スキップ済みで未閉の note_on 数
-    skipped_active: dict[int, int] = {}
+    seen_note_ons: set[tuple[int, int]] = set()  # (abs_tick, pitch)
+    kept_active: dict[int, int] = {}     # pitch -> count of kept open note_ons
+    skipped_active: dict[int, int] = {}  # pitch -> count of skipped open note_ons
 
     result: list[tuple[int, object]] = []
     removed_details: list[RemovedNote] = []
@@ -152,14 +151,14 @@ def _remove_duplicates(messages: list) -> tuple[list, list[RemovedNote]]:
                 result.append((abs_tick, msg))
             elif skipped_active.get(msg.note, 0) > 0:
                 skipped_active[msg.note] -= 1
-                # スキップした note_on に対応する note_off なので削除
+                # note_off for a skipped note_on — discard
             else:
-                # 孤立 note_off はそのまま通す
+                # Orphaned note_off — pass through
                 result.append((abs_tick, msg))
         else:
             result.append((abs_tick, msg))
 
-    # 絶対 tick -> デルタ時間に戻す
+    # Convert absolute ticks back to delta times
     delta_messages = []
     prev_tick = 0
     for abs_tick, msg in result:

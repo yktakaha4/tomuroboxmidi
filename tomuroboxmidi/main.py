@@ -9,7 +9,7 @@ _MIDI_SUFFIXES = {".mid", ".midi"}
 
 
 def _collect_input_files(input_args: list[str]) -> list[Path]:
-    """引数リストを解析し、ディレクトリはその直下の MIDI ファイルに展開して返す。"""
+    """Resolve input arguments, expanding directories to their MIDI files."""
     result: list[Path] = []
     for arg in input_args:
         path = Path(arg)
@@ -20,7 +20,7 @@ def _collect_input_files(input_args: list[str]) -> list[Path]:
                 if p.is_file() and p.suffix.lower() in _MIDI_SUFFIXES
             )
             if not found:
-                print(f"[スキップ] MIDIファイルが見つかりません: {path}")
+                print(f"[skip] No MIDI files found in: {path}")
             result.extend(found)
         else:
             result.append(path)
@@ -30,39 +30,39 @@ def _collect_input_files(input_args: list[str]) -> list[Path]:
 def main() -> None:
     parser = argparse.ArgumentParser(
         prog="tomuroboxmidi",
-        description="MIDIファイルをMuro Box向け形式に変換します",
+        description="Convert MIDI files to Muro Box compatible format",
     )
     parser.add_argument(
         "input_files",
         nargs="+",
         metavar="input_file",
-        help="変換対象のMIDIファイル",
+        help="MIDI file(s) or directory to convert",
     )
     parser.add_argument(
         "-f",
         "--force",
         action="store_true",
-        help="出力先に同名ファイルが存在しても確認なしに上書きする",
+        help="overwrite existing output files without confirmation",
     )
     parser.add_argument(
         "-o",
         "--output",
         metavar="dir",
         default=None,
-        help="出力先ディレクトリ（省略時: ./muroboxmidi/）",
+        help="output directory (default: ./muroboxmidi/)",
     )
     parser.add_argument(
         "-m",
         "--model",
         choices=list(MODEL_MAP.keys()),
         default="n40",
-        help="対象のMuro Boxモデル（省略時: n40）",
+        help="target Muro Box model (default: n40)",
     )
     parser.add_argument(
         "-v",
         "--verbose",
         action="store_true",
-        help="削除されたノートの詳細を表示する",
+        help="print details of each removed note",
     )
 
     args = parser.parse_args()
@@ -76,7 +76,7 @@ def main() -> None:
         output_dir.mkdir(parents=True, exist_ok=True)
     except OSError as e:
         print(
-            f"エラー: 出力ディレクトリを作成できませんでした: {output_dir}: {e}",
+            f"Error: could not create output directory: {output_dir}: {e}",
             file=sys.stderr,
         )
         sys.exit(1)
@@ -90,7 +90,7 @@ def main() -> None:
 
     for input_path in input_paths:
         if not input_path.exists():
-            print(f"[スキップ] ファイルが存在しません: {input_path}")
+            print(f"[skip] File not found: {input_path}")
             skipped += 1
             continue
 
@@ -99,43 +99,41 @@ def main() -> None:
         if output_path.exists() and not args.force:
             try:
                 answer = input(
-                    f"出力先ファイルが既に存在します: {output_path}\n上書きしますか？ [y/N]: "
+                    f"Output file already exists: {output_path}\nOverwrite? [y/N]: "
                 )
             except EOFError:
                 answer = ""
             if answer.strip().lower() != "y":
-                print(f"[スキップ] {input_path.name}")
+                print(f"[skip] {input_path.name}")
                 skipped += 1
                 continue
 
         try:
             result = convert(input_path, output_path, valid_notes)
         except Exception as e:
-            print(f"[エラー] {input_path}: {e}")
+            print(f"[error] {input_path}: {e}")
             skipped += 1
             continue
 
-        print(f"[変換完了] {input_path} -> {output_path}")
-        print(f"  - 音域外削除: {result.removed_out_of_range} ノート")
+        print(f"[done] {input_path} -> {output_path}")
+        print(f"  - out of range: {result.removed_out_of_range} note(s)")
         if args.verbose:
             for n in result.removed_note_details:
                 if n.reason == "out_of_range":
                     print(f"      tick={n.abs_tick}  {note_name(n.note)} ({n.note})")
-        print(f"  - 重複削除: {result.removed_duplicates} ノート")
+        print(f"  - duplicates:   {result.removed_duplicates} note(s)")
         if args.verbose:
             for n in result.removed_note_details:
                 if n.reason == "duplicate":
                     print(f"      tick={n.abs_tick}  {note_name(n.note)} ({n.note})")
-        print(f"  - 残存ノート: {result.remaining_notes} ノート")
+        print(f"  - remaining:    {result.remaining_notes} note(s)")
 
         if result.remaining_notes == 0:
-            print("  [警告] 変換後のノートが0件です")
+            print("  [warning] No notes remaining after conversion")
 
         converted += 1
 
-    print(
-        f"\n処理完了: {total} ファイル中 {converted} ファイル変換 (スキップ: {skipped})"
-    )
+    print(f"\nDone: {converted}/{total} file(s) converted (skipped: {skipped})")
 
 
 if __name__ == "__main__":
