@@ -33,4 +33,6 @@ jobs:
         run: make test
 
       - name: build
-        run: make build
+        run: |
+          make build
+          ./dist/tomuroboxmidi -h
