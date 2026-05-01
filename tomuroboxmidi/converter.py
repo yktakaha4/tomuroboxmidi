@@ -34,7 +34,8 @@ def convert(
     mid = mido.MidiFile(str(input_path))
     merged = list(mido.merge_tracks(mid.tracks))
 
-    filtered, range_details = _remove_out_of_range(merged, valid_notes)
+    deduped_meta = _remove_duplicate_meta(merged)
+    filtered, range_details = _remove_out_of_range(deduped_meta, valid_notes)
     deduped, dup_details = _remove_duplicates(filtered)
     with_eot = _set_end_of_track(deduped, mid.ticks_per_beat)
 
@@ -52,6 +53,34 @@ def convert(
         remaining_notes=remaining,
         removed_note_details=range_details + dup_details,
     )
+
+
+def _remove_duplicate_meta(messages: list) -> list:
+    """Remove meta messages at non-zero ticks whose type already appeared at tick=0."""
+    types_at_zero: set[str] = set()
+    current_tick = 0
+    for msg in messages:
+        current_tick += msg.time
+        if current_tick == 0 and isinstance(msg, mido.MetaMessage):
+            types_at_zero.add(msg.type)
+
+    result = []
+    current_tick = 0
+    pending_time = 0
+    for msg in messages:
+        current_tick += msg.time
+        if (
+            current_tick > 0
+            and isinstance(msg, mido.MetaMessage)
+            and msg.type not in ("end_of_track", "set_tempo", "key_signature")
+            and msg.type in types_at_zero
+        ):
+            pending_time += msg.time
+        else:
+            result.append(msg.copy(time=msg.time + pending_time))
+            pending_time = 0
+
+    return result
 
 
 def _remove_out_of_range(

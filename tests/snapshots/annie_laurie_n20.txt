@@ -25,21 +25,8 @@ tick=       0  MetaMessage('track_name', name='Music Box')
 tick=       0  MetaMessage('instrument_name', name='Music Box')
 tick=     120  note_off channel=0 note=71 velocity=64  # B3
 tick=     360  note_on channel=0 note=69 velocity=80  # A3
-tick=     480  MetaMessage('time_signature', numerator=4, denominator=4, clocks_per_click=24, notated_32nd_notes_per_beat=8)
 tick=     480  note_off channel=0 note=69 velocity=64  # A3
 tick=     480  note_on channel=0 note=67 velocity=80  # G3
-tick=     480  MetaMessage('channel_prefix', channel=0)
-tick=     480  MetaMessage('track_name', name='Music Box')
-tick=     480  MetaMessage('instrument_name', name='Music Box')
-tick=     480  MetaMessage('channel_prefix', channel=0)
-tick=     480  MetaMessage('track_name', name='Music Box')
-tick=     480  MetaMessage('instrument_name', name='Music Box')
-tick=     480  MetaMessage('channel_prefix', channel=0)
-tick=     480  MetaMessage('track_name', name='Music Box')
-tick=     480  MetaMessage('instrument_name', name='Music Box')
-tick=     480  MetaMessage('channel_prefix', channel=0)
-tick=     480  MetaMessage('track_name', name='Music Box')
-tick=     480  MetaMessage('instrument_name', name='Music Box')
 tick=     600  note_off channel=0 note=67 velocity=64  # G3
 tick=     720  note_on channel=0 note=62 velocity=80  # D3
 tick=     839  note_off channel=0 note=62 velocity=64  # D3
@@ -137,7 +124,6 @@ tick=   11040  note_on channel=0 note=60 velocity=80  # C3
 tick=   11159  note_off channel=0 note=60 velocity=64  # C3
 tick=   11280  note_on channel=0 note=67 velocity=80  # G3
 tick=   11399  note_off channel=0 note=67 velocity=64  # G3
-tick=   11520  MetaMessage('time_signature', numerator=1, denominator=4, clocks_per_click=24, notated_32nd_notes_per_beat=8)
 tick=   11520  MetaMessage('key_signature', key='C')
 tick=   11520  note_on channel=0 note=76 velocity=80  # E4
 tick=   11520  note_on channel=0 note=64 velocity=80  # E3
@@ -277,7 +263,6 @@ tick=   28439  note_off channel=0 note=71 velocity=64  # B3
 tick=   28439  note_off channel=0 note=62 velocity=64  # D3
 tick=   28560  note_on channel=0 note=69 velocity=80  # A3
 tick=   28679  note_off channel=0 note=69 velocity=64  # A3
-tick=   28800  MetaMessage('smpte_offset', frame_rate=25, hours=1, minutes=0, seconds=0, frames=0, sub_frames=0)
 tick=   28800  MetaMessage('set_tempo', tempo=666667)
 tick=   29040  note_on channel=0 note=69 velocity=80  # A3
 tick=   29159  note_off channel=0 note=69 velocity=64  # A3
@@ -290,7 +275,6 @@ tick=   30119  note_off channel=0 note=62 velocity=64  # D3
 tick=   30720  note_on channel=0 note=71 velocity=80  # B3
 tick=   30840  note_off channel=0 note=71 velocity=64  # B3
 tick=   31080  note_on channel=0 note=69 velocity=80  # A3
-tick=   31200  MetaMessage('time_signature', numerator=4, denominator=4, clocks_per_click=24, notated_32nd_notes_per_beat=8)
 tick=   31200  note_off channel=0 note=69 velocity=64  # A3
 tick=   31200  note_on channel=0 note=67 velocity=80  # G3
 tick=   31320  note_off channel=0 note=67 velocity=64  # G3
@@ -390,7 +374,6 @@ tick=   41760  note_on channel=0 note=60 velocity=80  # C3
 tick=   41879  note_off channel=0 note=60 velocity=64  # C3
 tick=   42000  note_on channel=0 note=67 velocity=80  # G3
 tick=   42119  note_off channel=0 note=67 velocity=64  # G3
-tick=   42240  MetaMessage('time_signature', numerator=1, denominator=4, clocks_per_click=24, notated_32nd_notes_per_beat=8)
 tick=   42240  MetaMessage('key_signature', key='C')
 tick=   42240  note_on channel=0 note=76 velocity=80  # E4
 tick=   42240  note_on channel=0 note=64 velocity=80  # E3
@@ -530,7 +513,6 @@ tick=   59159  note_off channel=0 note=71 velocity=64  # B3
 tick=   59159  note_off channel=0 note=62 velocity=64  # D3
 tick=   59280  note_on channel=0 note=69 velocity=80  # A3
 tick=   59399  note_off channel=0 note=69 velocity=64  # A3
-tick=   59520  MetaMessage('smpte_offset', frame_rate=25, hours=1, minutes=0, seconds=0, frames=0, sub_frames=0)
 tick=   59520  MetaMessage('set_tempo', tempo=666667)
 tick=   59760  note_on channel=0 note=69 velocity=80  # A3
 tick=   59879  note_off channel=0 note=69 velocity=64  # A3
@@ -543,7 +525,6 @@ tick=   60839  note_off channel=0 note=62 velocity=64  # D3
 tick=   61440  note_on channel=0 note=71 velocity=80  # B3
 tick=   61560  note_off channel=0 note=71 velocity=64  # B3
 tick=   61800  note_on channel=0 note=69 velocity=80  # A3
-tick=   61920  MetaMessage('time_signature', numerator=4, denominator=4, clocks_per_click=24, notated_32nd_notes_per_beat=8)
 tick=   61920  note_off channel=0 note=69 velocity=64  # A3
 tick=   61920  note_on channel=0 note=67 velocity=80  # G3
 tick=   62040  note_off channel=0 note=67 velocity=64  # G3
@@ -643,7 +624,6 @@ tick=   72480  note_on channel=0 note=60 velocity=80  # C3
 tick=   72599  note_off channel=0 note=60 velocity=64  # C3
 tick=   72720  note_on channel=0 note=67 velocity=80  # G3
 tick=   72839  note_off channel=0 note=67 velocity=64  # G3
-tick=   72960  MetaMessage('time_signature', numerator=1, denominator=4, clocks_per_click=24, notated_32nd_notes_per_beat=8)
 tick=   72960  MetaMessage('key_signature', key='C')
 tick=   72960  note_on channel=0 note=76 velocity=80  # E4
 tick=   72960  note_on channel=0 note=64 velocity=80  # E3
@@ -783,7 +763,6 @@ tick=   89879  note_off channel=0 note=71 velocity=64  # B3
 tick=   89879  note_off channel=0 note=62 velocity=64  # D3
 tick=   90000  note_on channel=0 note=69 velocity=80  # A3
 tick=   90119  note_off channel=0 note=69 velocity=64  # A3
-tick=   90240  MetaMessage('smpte_offset', frame_rate=25, hours=1, minutes=0, seconds=0, frames=0, sub_frames=0)
 tick=   90240  MetaMessage('set_tempo', tempo=666667)
 tick=   90480  note_on channel=0 note=69 velocity=80  # A3
 tick=   90599  note_off channel=0 note=69 velocity=64  # A3
@@ -796,7 +775,6 @@ tick=   91559  note_off channel=0 note=62 velocity=64  # D3
 tick=   92160  note_on channel=0 note=71 velocity=80  # B3
 tick=   92280  note_off channel=0 note=71 velocity=64  # B3
 tick=   92520  note_on channel=0 note=69 velocity=80  # A3
-tick=   92640  MetaMessage('time_signature', numerator=4, denominator=4, clocks_per_click=24, notated_32nd_notes_per_beat=8)
 tick=   92640  note_off channel=0 note=69 velocity=64  # A3
 tick=   92640  note_on channel=0 note=67 velocity=80  # G3
 tick=   92760  note_off channel=0 note=67 velocity=64  # G3

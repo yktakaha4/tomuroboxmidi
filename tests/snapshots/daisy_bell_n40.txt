@@ -53,33 +53,9 @@ tick=    2640  note_on channel=0 note=64 velocity=80  # E3
 tick=    2640  note_on channel=0 note=67 velocity=80  # G3
 tick=    2759  note_off channel=0 note=64 velocity=64  # E3
 tick=    2759  note_off channel=0 note=67 velocity=64  # G3
-tick=    2880  MetaMessage('channel_prefix', channel=0)
-tick=    2880  MetaMessage('track_name', name='Music Box')
-tick=    2880  MetaMessage('instrument_name', name='Music Box')
 tick=    2880  note_on channel=0 note=79 velocity=80  # G4
 tick=    2880  note_on channel=0 note=91 velocity=80  # G5
-tick=    2880  MetaMessage('channel_prefix', channel=0)
-tick=    2880  MetaMessage('track_name', name='Music Box')
-tick=    2880  MetaMessage('instrument_name', name='Music Box')
-tick=    2880  MetaMessage('channel_prefix', channel=0)
-tick=    2880  MetaMessage('track_name', name='Music Box')
-tick=    2880  MetaMessage('instrument_name', name='Music Box')
-tick=    2880  MetaMessage('channel_prefix', channel=0)
-tick=    2880  MetaMessage('track_name', name='Music Box')
-tick=    2880  MetaMessage('instrument_name', name='Music Box')
-tick=    2880  MetaMessage('channel_prefix', channel=0)
-tick=    2880  MetaMessage('track_name', name='Music Box')
-tick=    2880  MetaMessage('instrument_name', name='Music Box')
 tick=    2880  note_on channel=0 note=60 velocity=80  # C3
-tick=    2880  MetaMessage('channel_prefix', channel=0)
-tick=    2880  MetaMessage('track_name', name='Music Box')
-tick=    2880  MetaMessage('instrument_name', name='Music Box')
-tick=    2880  MetaMessage('channel_prefix', channel=0)
-tick=    2880  MetaMessage('track_name', name='Music Box')
-tick=    2880  MetaMessage('instrument_name', name='Music Box')
-tick=    2880  MetaMessage('channel_prefix', channel=0)
-tick=    2880  MetaMessage('track_name', name='Music Box')
-tick=    2880  MetaMessage('instrument_name', name='Music Box')
 tick=    2999  note_off channel=0 note=79 velocity=64  # G4
 tick=    2999  note_off channel=0 note=91 velocity=64  # G5
 tick=    2999  note_off channel=0 note=60 velocity=64  # C3
