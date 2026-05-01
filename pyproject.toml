@@ -16,3 +16,6 @@ dependencies = [
 
 [project.scripts]
 tomuroboxmidi = "tomuroboxmidi.main:main"
+
+[dependency-groups]
+build = ["pyinstaller>=6"]
