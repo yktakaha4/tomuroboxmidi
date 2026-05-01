@@ -1,6 +1,4 @@
-def main():
-    print("Hello from tomuroboxmidi!")
-
+from tomuroboxmidi.main import main
 
 if __name__ == "__main__":
     main()
