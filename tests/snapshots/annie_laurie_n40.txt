@@ -1474,4 +1474,4 @@ tick=  122160  note_on channel=0 note=62 velocity=80  # D3
 tick=  122279  note_off channel=0 note=62 velocity=64  # D3
 tick=  122400  note_on channel=0 note=55 velocity=80  # G2
 tick=  122519  note_off channel=0 note=55 velocity=64  # G2
-tick=  245760  MetaMessage('end_of_track')
+tick=  124679  MetaMessage('end_of_track')

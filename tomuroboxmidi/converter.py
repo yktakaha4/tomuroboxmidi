@@ -36,13 +36,14 @@ def convert(
 
     filtered, range_details = _remove_out_of_range(merged, valid_notes)
     deduped, dup_details = _remove_duplicates(filtered)
+    with_eot = _set_end_of_track(deduped, mid.ticks_per_beat)
 
     remaining = sum(1 for m in deduped if m.type == "note_on" and m.velocity > 0)
 
     out_mid = mido.MidiFile(type=0, ticks_per_beat=mid.ticks_per_beat)
     out_track = mido.MidiTrack()
     out_mid.tracks.append(out_track)
-    out_track.extend(deduped)
+    out_track.extend(with_eot)
     out_mid.save(str(output_path))
 
     return ConvertResult(
@@ -166,3 +167,28 @@ def _remove_duplicates(messages: list) -> tuple[list, list[RemovedNote]]:
         prev_tick = abs_tick
 
     return delta_messages, removed_details
+
+
+def _set_end_of_track(messages: list, ticks_per_beat: int) -> list:
+    """Remove existing end_of_track messages and append one 3 seconds after the last note event."""
+    filtered = [m for m in messages if m.type != "end_of_track"]
+
+    current_tick = 0
+    last_note_tick = 0
+    current_tempo = 500000  # default: 120 BPM
+    last_note_tempo = 500000
+
+    for msg in filtered:
+        current_tick += msg.time
+        if msg.type == "set_tempo":
+            current_tempo = msg.tempo
+        if hasattr(msg, "note"):
+            last_note_tick = current_tick
+            last_note_tempo = current_tempo
+
+    three_sec_ticks = int(mido.second2tick(3.0, ticks_per_beat, last_note_tempo))
+    eot_tick = last_note_tick + three_sec_ticks
+    eot_delta = max(0, eot_tick - current_tick)
+
+    filtered.append(mido.MetaMessage("end_of_track", time=eot_delta))
+    return filtered

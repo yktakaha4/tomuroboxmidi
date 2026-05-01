@@ -1913,4 +1913,4 @@ tick=   94320  note_on channel=0 note=60 velocity=80  # C3
 tick=   94320  note_on channel=0 note=64 velocity=80  # E3
 tick=   94439  note_off channel=0 note=60 velocity=64  # C3
 tick=   94439  note_off channel=0 note=64 velocity=64  # E3
-tick=  245760  MetaMessage('end_of_track')
+tick=   96119  MetaMessage('end_of_track')
