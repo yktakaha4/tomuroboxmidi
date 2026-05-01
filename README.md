@@ -96,27 +96,35 @@ cd tomuroboxmidi
 uv sync
 ```
 
+### Make targets
+
+| Command | Description |
+|---|---|
+| `make install` | Install `tomuroboxmidi` as a system command via `uv tool` |
+| `make fix` | Auto-format code with black and isort |
+| `make check` | Verify formatting without modifying files (used in CI) |
+| `make test` | Run snapshot tests |
+| `make build` | Build a standalone binary with PyInstaller |
+
 ### Running the tool locally
 
 ```sh
 uv run tomuroboxmidi --help
+# or after make install:
+tomuroboxmidi --help
 ```
 
 ### Code style
 
-This project uses [black](https://github.com/psf/black) for formatting and [isort](https://pycf.github.io/isort/) for import sorting.
-
 ```sh
-uv run black .
-uv run isort .
+make fix    # auto-format
+make check  # check only (no changes)
 ```
 
 ### Running tests
 
-Snapshot tests using `unittest`:
-
 ```sh
-uv run python -m unittest discover -s tests -v
+make test
 ```
 
 To regenerate snapshots after intentional behavior changes:
@@ -127,7 +135,7 @@ UPDATE_SNAPSHOTS=1 uv run python -m unittest tests/test_converter.py
 
 ### CI
 
-GitHub Actions runs black, isort, and unittest on every push and pull request to `main`.
+GitHub Actions runs `make check` and `make test` on every push and pull request to `main`.
 
 ---
 
@@ -136,8 +144,7 @@ GitHub Actions runs black, isort, and unittest on every push and pull request to
 Produces a single self-contained executable via [PyInstaller](https://pyinstaller.org/).
 
 ```sh
-uv sync --group build
-uv run pyinstaller --onefile --name tomuroboxmidi main.py
+make build
 # Output: dist/tomuroboxmidi
 ```
 

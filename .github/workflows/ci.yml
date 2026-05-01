@@ -26,11 +26,8 @@ jobs:
       - name: Install dependencies
         run: uv sync
 
-      - name: black
-        run: uv run black --check .
+      - name: check
+        run: make check
 
-      - name: isort
-        run: uv run isort --check-only .
-
-      - name: unittest
-        run: uv run python -m unittest discover -s tests -v
+      - name: test
+        run: make test

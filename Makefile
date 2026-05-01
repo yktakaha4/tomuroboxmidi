@@ -1,8 +1,12 @@
-.PHONY: fix test build install
+.PHONY: fix check test build install
 
 fix:
 	uv run black .
 	uv run isort .
+
+check:
+	uv run black --check .
+	uv run isort --check-only .
 
 test:
 	uv run python -m unittest discover -s tests -v
