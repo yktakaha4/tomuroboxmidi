@@ -24,10 +24,13 @@ jobs:
           python-version: "3.14"
 
       - name: Install dependencies
-        run: uv sync
+        run: make install
 
       - name: check
         run: make check
 
       - name: test
         run: make test
+
+      - name: build
+        run: make build
