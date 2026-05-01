@@ -86,7 +86,9 @@ class TestConverterSnapshot(unittest.TestCase):
             )
 
         expected = snapshot_path.read_text(encoding="utf-8")
-        self.assertEqual(actual, expected, f"スナップショットと一致しません: {snapshot_path}")
+        self.assertEqual(
+            actual, expected, f"スナップショットと一致しません: {snapshot_path}"
+        )
 
     def test_daisy_bell_n20(self):
         self._run("daisy_bell.mid", "n20")

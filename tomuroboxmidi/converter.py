@@ -37,10 +37,7 @@ def convert(
     filtered, range_details = _remove_out_of_range(merged, valid_notes)
     deduped, dup_details = _remove_duplicates(filtered)
 
-    remaining = sum(
-        1 for m in deduped
-        if m.type == "note_on" and m.velocity > 0
-    )
+    remaining = sum(1 for m in deduped if m.type == "note_on" and m.velocity > 0)
 
     out_mid = mido.MidiFile(type=0, ticks_per_beat=mid.ticks_per_beat)
     out_track = mido.MidiTrack()
@@ -88,7 +85,9 @@ def _remove_out_of_range(
         if msg.note not in valid_notes:
             if is_note_on:
                 filtered_active[msg.note] = filtered_active.get(msg.note, 0) + 1
-                removed_details.append(RemovedNote(msg.note, current_tick, "out_of_range"))
+                removed_details.append(
+                    RemovedNote(msg.note, current_tick, "out_of_range")
+                )
                 pending_time += msg.time
             elif is_note_off:
                 if filtered_active.get(msg.note, 0) > 0:

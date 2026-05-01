@@ -5,7 +5,6 @@ from pathlib import Path
 from tomuroboxmidi.converter import convert, note_name
 from tomuroboxmidi.models import MODEL_MAP
 
-
 _MIDI_SUFFIXES = {".mid", ".midi"}
 
 
@@ -16,7 +15,8 @@ def _collect_input_files(input_args: list[str]) -> list[Path]:
         path = Path(arg)
         if path.is_dir():
             found = sorted(
-                p for p in path.iterdir()
+                p
+                for p in path.iterdir()
                 if p.is_file() and p.suffix.lower() in _MIDI_SUFFIXES
             )
             if not found:
@@ -39,24 +39,28 @@ def main() -> None:
         help="変換対象のMIDIファイル",
     )
     parser.add_argument(
-        "-f", "--force",
+        "-f",
+        "--force",
         action="store_true",
         help="出力先に同名ファイルが存在しても確認なしに上書きする",
     )
     parser.add_argument(
-        "-o", "--output",
+        "-o",
+        "--output",
         metavar="dir",
         default=None,
         help="出力先ディレクトリ（省略時: ./muroboxmidi/）",
     )
     parser.add_argument(
-        "-m", "--model",
+        "-m",
+        "--model",
         choices=list(MODEL_MAP.keys()),
         default="n40",
         help="対象のMuro Boxモデル（省略時: n40）",
     )
     parser.add_argument(
-        "-v", "--verbose",
+        "-v",
+        "--verbose",
         action="store_true",
         help="削除されたノートの詳細を表示する",
     )
@@ -129,7 +133,9 @@ def main() -> None:
 
         converted += 1
 
-    print(f"\n処理完了: {total} ファイル中 {converted} ファイル変換 (スキップ: {skipped})")
+    print(
+        f"\n処理完了: {total} ファイル中 {converted} ファイル変換 (スキップ: {skipped})"
+    )
 
 
 if __name__ == "__main__":
